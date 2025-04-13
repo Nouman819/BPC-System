@@ -4,9 +4,9 @@ public class Person {
     public int id;
     public String fullName;
     public String address;
-    public String phone;
+    public int phone;
 
-    public Person(int id, String fullName, String address, String phone) {
+    public Person(int id, String fullName, String address, int phone) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
