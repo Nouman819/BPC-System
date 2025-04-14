@@ -1,5 +1,6 @@
 package BPC;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -57,14 +58,30 @@ public class BPC_Main {
         Treatment massage = new Treatment("Massage", "Physiotherapy");
         Treatment acupuncture = new Treatment("Acupuncture", "Rehabilitation");
 
+        ArrayList<String> expertiseList = new ArrayList<>();
+        expertiseList.add("Physiotherapy");
+        expertiseList.add("Rehabilitation");
+        Physiotherapist physio = new Physiotherapist(1, "Dr. Alice", "Walker",12134);
+
+        // TreatmentSlot
+        LocalDateTime start = LocalDateTime.of(2025, 4, 15, 10, 0);
+        LocalDateTime end = LocalDateTime.of(2025, 4, 15, 11, 0);
+        TreatmentSlot slot = new TreatmentSlot(massage, start, end, physio);
 
 
-        System.out.println("Treatment 1: " + massage);
-        System.out.println("Treatment 2: " + acupuncture);
+        System.out.println("Before Booking: ");
+        System.out.println(slot);
+        System.out.println("Is Booked? " + slot.isBooked);
 
 
-        System.out.println("Name of t1: " + massage.getName());
-        System.out.println("Expertise of t2: " +acupuncture.getExpertise());
+        slot.bookSlot();
+        System.out.println("\nAfter Booking: ");
+        System.out.println("Is Booked? " + slot.isBooked);
+
+
+        slot.cancelSlot();
+        System.out.println("\nAfter Cancellation: ");
+        System.out.println("Is Booked? " + slot.isBooked);
 
        /* while (true) {
             System.out.println("\n--- Boost Physio Clinic ---");

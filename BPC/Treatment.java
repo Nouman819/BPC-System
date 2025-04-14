@@ -2,7 +2,7 @@ package BPC;
 
 public class Treatment {
     public String name;
-    public String expertise; // e.g., "Physiotherapy", "Rehabilitation"
+    public String expertise;
 
     public Treatment(String name, String expertise) {
         this.name = name;
