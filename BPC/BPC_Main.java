@@ -55,33 +55,14 @@ public class BPC_Main {
         BPC_Main main = new BPC_Main();
 
         Scanner scanner = new Scanner(System.in);
-        Treatment massage = new Treatment("Massage", "Physiotherapy");
-        Treatment acupuncture = new Treatment("Acupuncture", "Rehabilitation");
 
-        ArrayList<String> expertiseList = new ArrayList<>();
-        expertiseList.add("Physiotherapy");
-        expertiseList.add("Rehabilitation");
-        Physiotherapist physio = new Physiotherapist(1, "Dr. Alice", "Walker",12134);
+        AppointmentRequest request1 = new AppointmentRequest(101, "Physiotherapy", true);
 
-        // TreatmentSlot
-        LocalDateTime start = LocalDateTime.of(2025, 4, 15, 10, 0);
-        LocalDateTime end = LocalDateTime.of(2025, 4, 15, 11, 0);
-        TreatmentSlot slot = new TreatmentSlot(massage, start, end, physio);
+        System.out.println("Request 1:");
+        System.out.println("Patient ID: " + request1.getPatientId());
+        System.out.println("Search for Expertise or Name: " + request1.getExpertiseOrName());
+        System.out.println("Search By Expertise? " + request1.isSearchByExpertise());
 
-
-        System.out.println("Before Booking: ");
-        System.out.println(slot);
-        System.out.println("Is Booked? " + slot.isBooked);
-
-
-        slot.bookSlot();
-        System.out.println("\nAfter Booking: ");
-        System.out.println("Is Booked? " + slot.isBooked);
-
-
-        slot.cancelSlot();
-        System.out.println("\nAfter Cancellation: ");
-        System.out.println("Is Booked? " + slot.isBooked);
 
        /* while (true) {
             System.out.println("\n--- Boost Physio Clinic ---");
