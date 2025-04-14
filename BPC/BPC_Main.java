@@ -49,12 +49,24 @@ public class BPC_Main {
         return false;
     }
 
+
     public static void main(String[] args) {
         BPC_Main main = new BPC_Main();
 
         Scanner scanner = new Scanner(System.in);
+        Treatment massage = new Treatment("Massage", "Physiotherapy");
+        Treatment acupuncture = new Treatment("Acupuncture", "Rehabilitation");
 
-        while (true) {
+
+
+        System.out.println("Treatment 1: " + massage);
+        System.out.println("Treatment 2: " + acupuncture);
+
+
+        System.out.println("Name of t1: " + massage.getName());
+        System.out.println("Expertise of t2: " +acupuncture.getExpertise());
+
+       /* while (true) {
             System.out.println("\n--- Boost Physio Clinic ---");
             System.out.println("1. Add Patient");
             System.out.println("2. Remove Patient");
@@ -84,7 +96,7 @@ public class BPC_Main {
                     scanner.nextLine();
                     break;
             }
-        }
+        }*/
     }
 }
 
