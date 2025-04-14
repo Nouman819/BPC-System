@@ -56,12 +56,43 @@ public class BPC_Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        AppointmentRequest request1 = new AppointmentRequest(101, "Physiotherapy", true);
+        Treatment treatment = new Treatment("Back Pain Therapy", "Physiotherapy");
 
-        System.out.println("Request 1:");
-        System.out.println("Patient ID: " + request1.getPatientId());
-        System.out.println("Search for Expertise or Name: " + request1.getExpertiseOrName());
-        System.out.println("Search By Expertise? " + request1.isSearchByExpertise());
+
+        Physiotherapist physio = new Physiotherapist(1, "Dr, Brown", "alice@example.com", 1213242342);
+
+
+        Patient patient = new Patient(1, "John","156 Baker", 12341 );
+
+
+        LocalDateTime start = LocalDateTime.of(2025, 4, 20, 10, 0);
+        LocalDateTime end = LocalDateTime.of(2025, 4, 20, 11, 0);
+        TreatmentSlot slot = new TreatmentSlot(treatment, start, end, physio);
+
+
+        AppointmentSchedule appointment = new AppointmentSchedule(patient, physio, "Physiotherapy", slot);
+
+
+        System.out.println("Initial Appointment:");
+        System.out.println(appointment);
+
+        // Mark as attended
+        appointment.markAsAttended();
+        System.out.println("\nAfter marking as attended:");
+        System.out.println(appointment);
+
+        // Reschedule to a new slot
+        LocalDateTime newStart = LocalDateTime.of(2025, 4, 21, 15, 0);
+        LocalDateTime newEnd = LocalDateTime.of(2025, 4, 21, 16, 0);
+        TreatmentSlot newSlot = new TreatmentSlot(treatment, newStart, newEnd, physio);
+        appointment.reschedule(newSlot);
+        System.out.println("\nAfter rescheduling:");
+        System.out.println(appointment);
+
+        // Cancel the appointment
+        appointment.cancel();
+        System.out.println("\nAfter cancelling:");
+        System.out.println(appointment);
 
 
        /* while (true) {
