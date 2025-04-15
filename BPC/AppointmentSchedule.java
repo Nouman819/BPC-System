@@ -2,12 +2,12 @@ package BPC;
 
 public class AppointmentSchedule {
     private static int nextId = 1;
-    private int id;
-    private Patient patient;
-    private Physiotherapist physiotherapist;
-    private String expertise;  // Expertise as String
-    private TreatmentSlot treatmentSlot;
-    private AppointmentStatus status;
+    private final int id;
+    private final Patient patient;
+    private final Physiotherapist physiotherapist;
+    private final String expertise;  // Expertise as String
+    private final TreatmentSlot treatmentSlot;
+    private final AppointmentStatus status;
 
     public AppointmentSchedule(Patient patient, Physiotherapist physiotherapist, String expertise, TreatmentSlot treatmentSlot)
     {
@@ -19,46 +19,8 @@ public class AppointmentSchedule {
         this.status = AppointmentStatus.BOOKED;
     }
 
-
     public int getId() {
         return id;
-    }
-
-    public Patient getPatient() {
-
-        return patient;
-    }
-
-    public Physiotherapist getPhysiotherapist() {
-        return physiotherapist;
-    }
-
-    public String getExpertise() {
-
-        return expertise;
-    }
-
-    public TreatmentSlot getTreatmentSlot() {
-        return treatmentSlot;
-    }
-
-    public AppointmentStatus getStatus() {
-        return status;
-    }
-
-
-    public void markAsAttended() {
-        this.status = AppointmentStatus.ATTENDED;
-    }
-
-
-    public void cancel() {
-        this.status = AppointmentStatus.CANCELLED;
-    }
-
-
-    public void reschedule(TreatmentSlot newSlot) {
-        this.treatmentSlot = newSlot;
     }
 
     @Override

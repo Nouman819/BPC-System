@@ -3,10 +3,10 @@ package BPC;
 import java.time.LocalDateTime;
 
 public class TreatmentSlot {
-    private Treatment treatment;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private Physiotherapist physiotherapist;
+    private final Treatment treatment;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final Physiotherapist physiotherapist;
     public boolean isBooked;
 
     public TreatmentSlot(Treatment treatment, LocalDateTime startTime, LocalDateTime endTime, Physiotherapist physiotherapist) {
@@ -14,6 +14,9 @@ public class TreatmentSlot {
         this.startTime = startTime;
         this.endTime = endTime;
         this.physiotherapist = physiotherapist;
+    }
+    public boolean Booked() {
+        return !isBooked;
     }
     public Treatment getTreatment() {
         return treatment;
@@ -31,14 +34,6 @@ public class TreatmentSlot {
         return physiotherapist;
     }
 
-    public void bookSlot() {
-        this.isBooked = true;
-    }
-
-
-    public void cancelSlot() {
-        this.isBooked = false;
-    }
     @Override
     public String toString() {
         return "Treatment: " + treatment.getName() + ", Physiotherapist: " + physiotherapist.getFullName() +
