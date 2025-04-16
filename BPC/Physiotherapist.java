@@ -22,7 +22,12 @@ public class Physiotherapist extends Person {
     public void addTreatmentSlot(TreatmentSlot slot) {
         timetable.add(slot);
     }
-
+    public List<TreatmentSlot> getTimetable() {
+        return timetable;
+    }
+    public List<String> getExpertiseAreas() {
+        return expertiseAreas;
+    }
     public List<TreatmentSlot> getAvailableSlotsByExpertise(String expertise) {
         List<TreatmentSlot> available = new ArrayList<>();
         if (!expertiseAreas.contains(expertise)) return available;

@@ -18,6 +18,9 @@ public class TreatmentSlot {
     public boolean Booked() {
         return !isBooked;
     }
+    public void bookSlot() {
+        this.isBooked = true;
+    }
     public Treatment getTreatment() {
         return treatment;
     }

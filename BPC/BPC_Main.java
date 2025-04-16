@@ -1,12 +1,7 @@
 package BPC;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.time.*;
+import java.util.*;
 public class BPC_Main {
     static int nextPatientId = 1;
     private final List<Patient> patients;
@@ -27,7 +22,7 @@ public class BPC_Main {
         }
         return false;
     }
-    
+
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
@@ -68,17 +63,27 @@ public class BPC_Main {
 
     public void bookAppointment(AppointmentRequest request) {
         Patient patient = findPatientById(request.getPatientId());
-        List<TreatmentSlot> availableSlots = new ArrayList<>();
-        if (request.isSearchByExpertise()) {
+    // This loop is to restrict the patient to book only one appointment at the time
+     /* for (AppointmentSchedule a : appointments) {
+            if (a.getPatient().getId() == patient.getId() && a.getStatus() == AppointmentStatus.BOOKED) {
+                System.out.println("This patient already has a booked appointment.");
+                return;
+            }
+        }*/
 
+        List<TreatmentSlot> availableSlots = new ArrayList<>();
+
+        if (request.isSearchByExpertiseorName()) {
             for (Physiotherapist physio : physiotherapists) {
                 availableSlots.addAll(physio.getAvailableSlotsByExpertise(request.getExpertiseOrName()));
             }
         } else {
-
             Physiotherapist physio = findPhysiotherapistByName(request.getExpertiseOrName());
             if (physio != null) {
                 availableSlots.addAll(physio.getAllAvailableSlots());
+            } else {
+                System.out.println("Physiotherapist not found.");
+                return;
             }
         }
 
@@ -92,15 +97,31 @@ public class BPC_Main {
         for (int i = 0; i < availableSlots.size(); i++) {
             System.out.println((i + 1) + ". " + availableSlots.get(i));
         }
+
         System.out.print("Choose an appointment: ");
         int choice = scanner.nextInt();
-        TreatmentSlot selectedSlot = availableSlots.get(choice - 1);
+        scanner.nextLine();
 
-        AppointmentSchedule appointment = new AppointmentSchedule(patient, selectedSlot.getPhysiotherapist(), selectedSlot.getTreatment().getExpertise(), selectedSlot);
+        if (choice < 1 || choice > availableSlots.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        TreatmentSlot selectedSlot = availableSlots.get(choice - 1);
+        selectedSlot.bookSlot();
+
+        AppointmentSchedule appointment = new AppointmentSchedule(
+                patient,
+                selectedSlot.getPhysiotherapist(),
+                selectedSlot.getTreatment().getExpertise(),
+                selectedSlot
+        );
+
         appointments.add(appointment);
         patient.addAppointmentId(appointment.getId());
-        System.out.println("Appointment booked successfully: " + appointment);
 
+        System.out.println("Appointment booked successfully:");
+        System.out.println(appointment);
     }
     public void attendAppointment(int appointmentId) {
         for (AppointmentSchedule appointment : appointments) {
@@ -140,15 +161,12 @@ public class BPC_Main {
 // Physiotherapists
         Physiotherapist helen = new Physiotherapist(1, "Helen", "123 Main St", 5551234);
         helen.addExpertise("Physiotherapy");
-        helen.addExpertise("Massage" + "Mobilisation of spine and joints ");
 
         Physiotherapist john = new Physiotherapist(2, "John", "456 Elm St", 5555678);
         john.addExpertise("Rehabilitation");
-        john.addExpertise("Acupuncture");
 
         Physiotherapist sara = new Physiotherapist(3, "Sara", "789 Maple St", 555-4321);
         sara.addExpertise("Osteopathy");
-        sara.addExpertise("Pool Rehabilitation");
 
         addPhysiotherapist(helen);
         addPhysiotherapist(john);
@@ -198,7 +216,6 @@ public class BPC_Main {
         BPC_Main main = new BPC_Main();
         main.sampleData();
         Scanner scanner = new Scanner(System.in);
-
 
        while (true) {
            System.out.println("\n**--- Boost Physio Clinic ---**");
@@ -258,15 +275,34 @@ public class BPC_Main {
                         System.out.println("No patient found with ID: " + patientId);
                         break;
                     }
-
                     scanner.nextLine();
-                    System.out.print("Search by Expertise (1) or Physiotherapist Name (2): ");
+                    System.out.println("For Appointment Booking do you want to ...");
+                    System.out.print("1. Search by Expertise   ");
+                    System.out.println("\n2. Search by Physiotherapist Name   ");
+                    System.out.println("0. Go Back to Main Menu");
+                    System.out.print("Enter your choice: ");
                     int searchChoice = scanner.nextInt();
                     scanner.nextLine();
                     boolean searchByExpertise = (searchChoice == 1);
-                    System.out.print("Enter expertise or physiotherapist's name: ");
-                    String expertiseOrName = scanner.nextLine();
-                    AppointmentRequest request = new AppointmentRequest(patientId, expertiseOrName, searchByExpertise);
+                    String expertise = null;
+                    String physioName = null;
+                    if (searchByExpertise) {
+                        System.out.print("Enter expertise: ");
+                        expertise = scanner.nextLine();
+                    }
+                    else if (searchChoice == 2) {
+                        System.out.print("Enter physiotherapist's name: ");
+                        physioName = scanner.nextLine();
+                    }
+                    else if (searchChoice == 0) {
+                        break;
+                    }
+                    else {
+                        System.out.println("\nInvalid Choice Entered\n");
+                    }
+                    String searchTerm = searchByExpertise ? expertise : physioName;
+
+                    AppointmentRequest request = new AppointmentRequest(patientId, searchTerm, searchByExpertise);
                     main.bookAppointment(request);
                     break;
                 case 3:
@@ -287,4 +323,3 @@ public class BPC_Main {
         }
     }
 }
-

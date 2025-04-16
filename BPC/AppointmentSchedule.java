@@ -22,6 +22,10 @@ public class AppointmentSchedule {
     public int getId() {
         return id;
     }
+    public Patient getPatient() {
+
+        return patient;
+    }
     public Physiotherapist getPhysiotherapist() {
         return physiotherapist;
     }
