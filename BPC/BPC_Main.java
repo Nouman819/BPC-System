@@ -105,7 +105,16 @@ public class BPC_Main {
         System.out.println("Appointment booked successfully: " + appointment);
 
     }
-
+    public void attendAppointment(int appointmentId) {
+        for (AppointmentSchedule appointment : appointments) {
+            if (appointment.getId() == appointmentId) {
+                appointment.markAsAttended();
+                System.out.println("Appointment marked as attended.");
+                return;
+            }
+        }
+        System.out.println("Appointment not found!");
+    }
 
     public void sampleData(){
 // Physiotherapists
@@ -175,7 +184,8 @@ public class BPC_Main {
            System.out.println("\n--- Boost Physio Clinic ---");
            System.out.println("1. Add/Remove Patient");
            System.out.println("2. Book Treatment Appointment");
-           System.out.println("3. Exit");
+           System.out.println("3. Attend Appointment");
+           System.out.println("4. Exit");
            System.out.print("Enter your choice: ");
             int Choice=scanner.nextInt();
             scanner.nextLine();
@@ -239,6 +249,11 @@ public class BPC_Main {
                     main.bookAppointment(request);
                     break;
                 case 3:
+                    System.out.print("Enter appointment ID to attend: ");
+                    int attendId = scanner.nextInt();
+                    main.attendAppointment(attendId);
+                    break;
+                case 4:
                     System.out.println("Exiting the system.");
                     return;
 

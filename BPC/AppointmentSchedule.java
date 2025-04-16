@@ -7,7 +7,7 @@ public class AppointmentSchedule {
     private final Physiotherapist physiotherapist;
     private final String expertise;  // Expertise as String
     private final TreatmentSlot treatmentSlot;
-    private final AppointmentStatus status;
+    private  AppointmentStatus status;
 
     public AppointmentSchedule(Patient patient, Physiotherapist physiotherapist, String expertise, TreatmentSlot treatmentSlot)
     {
@@ -22,7 +22,9 @@ public class AppointmentSchedule {
     public int getId() {
         return id;
     }
-
+    public void markAsAttended() {
+        this.status = AppointmentStatus.ATTENDED;
+    }
     @Override
     public String toString() {
         return "Appointment ID: " + id + ", Patient: " + patient.getFullName() +
