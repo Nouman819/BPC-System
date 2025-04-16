@@ -27,12 +27,10 @@ public class BPC_Main {
         }
         return false;
     }
-
-
+    
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
-
 
     public void removePatient(int id) {
         for (Patient patient : patients) {
@@ -58,7 +56,6 @@ public class BPC_Main {
     public void addPhysiotherapist(Physiotherapist physiotherapist) {
         physiotherapists.add(physiotherapist);
     }
-
 
     public Physiotherapist findPhysiotherapistByName(String name) {
         for (Physiotherapist physio : physiotherapists) {
@@ -115,7 +112,30 @@ public class BPC_Main {
         }
         System.out.println("Appointment not found!");
     }
+    public void generateReport() {
+        System.out.println("\n**--- Treatment Appointments Report ---**");
+        for (Physiotherapist physiotherapist : physiotherapists) {
+            System.out.println("\nPhysiotherapist: " + physiotherapist.getFullName());
+            for (AppointmentSchedule appointment : appointments) {
+                if (appointment.getPhysiotherapist() == physiotherapist) {
+                    System.out.println(appointment);
+                }
+            }
+        }
 
+
+        System.out.println("\n***--** Physiotherapists by Attended Appointments ***--**");
+        physiotherapists.sort((a, b) -> {
+            int countA = (int) appointments.stream().filter(app -> app.getPhysiotherapist() == a && app.getStatus() == AppointmentStatus.ATTENDED).count();
+            int countB = (int) appointments.stream().filter(app -> app.getPhysiotherapist() == b && app.getStatus() == AppointmentStatus.ATTENDED).count();
+            return Integer.compare(countB, countA); // descending order
+        });
+
+        for (Physiotherapist physiotherapist : physiotherapists) {
+            int attendedCount = (int) appointments.stream().filter(app -> app.getPhysiotherapist() == physiotherapist && app.getStatus() == AppointmentStatus.ATTENDED).count();
+            System.out.println(physiotherapist.getFullName() + " - Attended: " + attendedCount);
+        }
+    }
     public void sampleData(){
 // Physiotherapists
         Physiotherapist helen = new Physiotherapist(1, "Helen", "123 Main St", 5551234);
@@ -181,11 +201,12 @@ public class BPC_Main {
 
 
        while (true) {
-           System.out.println("\n--- Boost Physio Clinic ---");
-           System.out.println("1. Add/Remove Patient");
-           System.out.println("2. Book Treatment Appointment");
-           System.out.println("3. Attend Appointment");
-           System.out.println("4. Exit");
+           System.out.println("\n**--- Boost Physio Clinic ---**");
+           System.out.println("1.   Add/Remove Patient");
+           System.out.println("2.   Book Treatment Appointment");
+           System.out.println("3.   Attend Appointment");
+           System.out.println("4.   Generate Report");
+           System.out.println("5.   Exit");
            System.out.print("Enter your choice: ");
             int Choice=scanner.nextInt();
             scanner.nextLine();
@@ -254,6 +275,9 @@ public class BPC_Main {
                     main.attendAppointment(attendId);
                     break;
                 case 4:
+                    main.generateReport();
+                    break;
+                case 5:
                     System.out.println("Exiting the system.");
                     return;
 

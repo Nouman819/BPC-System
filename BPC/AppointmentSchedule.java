@@ -22,12 +22,19 @@ public class AppointmentSchedule {
     public int getId() {
         return id;
     }
+    public Physiotherapist getPhysiotherapist() {
+        return physiotherapist;
+    }
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
     public void markAsAttended() {
         this.status = AppointmentStatus.ATTENDED;
     }
     @Override
     public String toString() {
-        return "Appointment ID: " + id + ", Patient: " + patient.getFullName() +
+        return "\nAppointment ID: " + id + ", Patient: " + patient.getFullName() +
                 ", Physiotherapist: " + physiotherapist.getFullName() +
                 ", Expertise: " + expertise + ", Start Time: " + treatmentSlot.getStartTime() + "End Time : " + treatmentSlot.getEndTime() +
                 ", Status: " + status;
