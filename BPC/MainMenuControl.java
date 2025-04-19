@@ -9,11 +9,15 @@ public class MainMenuControl {
     private final List<Patient> patients;
     private final List<Physiotherapist> physiotherapists;
     private final List<AppointmentSchedule> appointments;
-
+    Scanner scanner = new Scanner(System.in);
     public MainMenuControl() {
         this.patients = new ArrayList<>();
         this.physiotherapists = new ArrayList<>();
         this.appointments = new ArrayList<>();
+    }
+
+    public List<Physiotherapist> getPhysiotherapists() {
+        return physiotherapists;
     }
 
     public boolean isPatientIdExists(int id) {
@@ -49,7 +53,6 @@ public class MainMenuControl {
         }
         return null;
     }
-
     public void addPhysiotherapist(Physiotherapist physiotherapist) {
         physiotherapists.add(physiotherapist);
     }
@@ -66,12 +69,12 @@ public class MainMenuControl {
     public void bookAppointment(AppointmentRequest request) {
         Patient patient = findPatientById(request.getPatientId());
         // This loop is to restrict the patient to book only one appointment at the time
-     /* for (AppointmentSchedule a : appointments) {
+        for (AppointmentSchedule a : appointments) {
             if (a.getPatient().getId() == patient.getId() && a.getStatus() == AppointmentStatus.BOOKED) {
-                System.out.println("This patient already has a booked appointment.");
+                System.out.println("This patient already has a booked appointment. If you want a book appointment, please cancel or attend previous one. Thanks");
                 return;
             }
-        }*/
+        }
 
         List<TreatmentSlot> availableSlots = new ArrayList<>();
 
@@ -125,6 +128,14 @@ public class MainMenuControl {
         System.out.println("Appointment booked successfully:");
         System.out.println(appointment);
     }
+    public AppointmentSchedule findAppointmentById(int appointmentId) {
+        for (AppointmentSchedule appointment : appointments) {
+            if (appointment.getId() == appointmentId) {
+                return appointment;
+            }
+        }
+        return null; // return null if not found
+    }
     public void attendAppointment(int appointmentId) {
         for (AppointmentSchedule appointment : appointments) {
             if (appointment.getId() == appointmentId) {
@@ -134,6 +145,106 @@ public class MainMenuControl {
             }
         }
         System.out.println("Appointment not found!");
+    }
+    public void cancelAppointment(int appointmentId) {
+        for (AppointmentSchedule appointment : appointments) {
+            if (appointment.getId() == appointmentId) {
+                if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+                    System.out.println("This appointment has already been cancelled.");
+                    return;
+                }
+
+                TreatmentSlot slot = appointment.getTreatmentSlot();
+                if (slot != null) {
+                    slot.cancelSlot();
+                }
+
+                appointment.cancel();
+                System.out.println("Appointment cancelled successfully.");
+                return;
+            }
+        }
+
+        System.out.println("Appointment not found!");
+    }
+
+    public void rescheduleAppointment(int appointmentId) {
+        AppointmentSchedule appointment = findAppointmentById(appointmentId);
+
+        if (appointment == null) {
+            System.out.println("Appointment not found.");
+            return;
+        }
+
+        System.out.println("Choose how you want to search new slots:");
+        System.out.println("1. By Expertise");
+        System.out.println("2. By Physiotherapist Name");
+        int searChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        List<TreatmentSlot> availableSlots = new ArrayList<>();
+
+        if (searChoice == 1) {
+            System.out.print("Enter expertise: ");
+            String expertise = scanner.nextLine();
+
+            for (Physiotherapist physio : getPhysiotherapists()) {
+                for (TreatmentSlot slot : physio.getTimetable()) {
+                    if (!slot.isBooked() &&
+                            slot.getTreatment().getExpertise().equalsIgnoreCase(expertise) &&
+                            slot != appointment.getTreatmentSlot()) {
+                        availableSlots.add(slot);
+                    }
+                }
+            }
+
+        } else if (searChoice == 2) {
+            System.out.print("Enter physiotherapist's name: ");
+           String physioName = scanner.nextLine();
+
+            Physiotherapist physio = findPhysiotherapistByName(physioName);
+            if (physio != null) {
+                for (TreatmentSlot slot : physio.getTimetable()) {
+                    if (!slot.isBooked() && slot != appointment.getTreatmentSlot()) {
+                        availableSlots.add(slot);
+                    }
+                }
+            } else {
+                System.out.println("Physiotherapist not found.");
+
+            }
+        }
+
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available slots found for rescheduling.");
+
+        }
+
+        System.out.println("Available Slots for Rescheduling:");
+        for (int i = 0; i < availableSlots.size(); i++) {
+            System.out.println((i + 1) + ". " + availableSlots.get(i));
+        }
+
+        System.out.print("Select a new slot number: ");
+        int selectedIndex = scanner.nextInt();
+        scanner.nextLine();
+
+        if (selectedIndex < 1 || selectedIndex > availableSlots.size()) {
+            System.out.println("Invalid selection.");
+        }
+
+
+
+        TreatmentSlot oldSlot = appointment.getTreatmentSlot();
+        TreatmentSlot newSlot = availableSlots.get(selectedIndex - 1);
+
+        oldSlot.cancelSlot();
+        newSlot.bookSlot();
+
+        appointment.reschedule(newSlot);
+        System.out.println("Appointment rescheduled successfully.");
+        System.out.println("Updated Appointment Details: " + appointment);
+
     }
     public void generateReport() {
         System.out.println("\n**--- Treatment Appointments Report ---**");

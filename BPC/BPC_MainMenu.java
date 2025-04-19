@@ -70,9 +70,10 @@ public class BPC_MainMenu {
            System.out.println("\n**--- Boost Physio Clinic ---**");
            System.out.println("1.   Add/Remove Patient");
            System.out.println("2.   Book Treatment Appointment");
-           System.out.println("3.   Attend Appointment");
-           System.out.println("4.   Generate Report");
-           System.out.println("5.   Exit");
+           System.out.println("3.   Change or Cancel Appointment");
+           System.out.println("4.   Attend Appointment");
+           System.out.println("5.   Generate Report");
+           System.out.println("6.   Exit");
            System.out.print("Enter your choice: ");
             int Choice=scanner.nextInt();
             scanner.nextLine();
@@ -155,14 +156,30 @@ public class BPC_MainMenu {
                     mainMenuControl.bookAppointment(request);
                     break;
                 case 3:
+                    System.out.print("Enter appointment ID to cancel or change: ");
+                    int appointmentId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("1. Cancel Appointment\n2. Change Appointment\nEnter choice: ");
+                    int actionChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (actionChoice == 1) {
+                        mainMenuControl.cancelAppointment(appointmentId);
+                    } else if (actionChoice == 2) {
+                        mainMenuControl.rescheduleAppointment(appointmentId);
+                    }
+                    break;
+                case 4:
                     System.out.print("Enter appointment ID to attend: ");
                     int attendId = scanner.nextInt();
                     mainMenuControl.attendAppointment(attendId);
                     break;
-                case 4:
+
+                case 5:
                     mainMenuControl.generateReport();
                     break;
-                case 5:
+                case 6:
                     System.out.println("Exiting the system.");
                     return;
 

@@ -21,6 +21,9 @@ public class TreatmentSlot {
     public void bookSlot() {
         this.isBooked = true;
     }
+    public void cancelSlot() {
+        this.isBooked = false;
+    }
     public Treatment getTreatment() {
         return treatment;
     }
@@ -41,5 +44,9 @@ public class TreatmentSlot {
     public String toString() {
         return "Treatment: " + treatment.getName() + ", Physiotherapist: " + physiotherapist.getFullName() +
                 ", Time: " + startTime + " to " + endTime;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
     }
 }
