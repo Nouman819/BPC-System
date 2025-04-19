@@ -3,12 +3,12 @@ package BPC;
 public class AppointmentRequest {
     private final int patientId;
     private final String expertise;
-    private final boolean searchByExpertiseorName;
+    private final boolean searchByExpertise;
 
-    public AppointmentRequest(int patientId, String expertiseOrName, boolean searchByExpertiseorName) {
+    public AppointmentRequest(int patientId, String expertiseOrName, boolean searchByExpertise) {
         this.patientId = patientId;
         this.expertise = expertiseOrName;
-        this.searchByExpertiseorName = searchByExpertiseorName;
+        this.searchByExpertise = searchByExpertise;
     }
 
     public int getPatientId() {
@@ -19,7 +19,7 @@ public class AppointmentRequest {
         return expertise;
     }
 
-    public boolean isSearchByExpertiseorName() {
-        return searchByExpertiseorName;
+    public boolean isSearchByExpertise() {
+        return searchByExpertise;
     }
 }

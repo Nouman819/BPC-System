@@ -7,38 +7,54 @@ public class BPC_MainMenu {
     Scanner scanner = new Scanner(System.in);
     public void sampleData(){
 // Physiotherapists
-        Physiotherapist helen = new Physiotherapist(1, "Helen", "123 Main St", 5551234);
+        Physiotherapist helen = new Physiotherapist(1, "Dr Helen", "123 Main St", 5551234);
         helen.addExpertise("Physiotherapy");
 
-        Physiotherapist john = new Physiotherapist(2, "John", "456 Elm St", 5555678);
+        Physiotherapist john = new Physiotherapist(2, "Dr John", "456 Elm St", 5555678);
         john.addExpertise("Rehabilitation");
 
-        Physiotherapist sara = new Physiotherapist(3, "Sara", "789 Maple St", 555-4321);
-        sara.addExpertise("Osteopathy");
+        Physiotherapist sarah = new Physiotherapist(3, "Dr Sarah", "789 Maple St", 555-4321);
+        sarah.addExpertise("Osteopathy");
 
         mainMenuControl.addPhysiotherapist(helen);
         mainMenuControl.addPhysiotherapist(john);
-        mainMenuControl.addPhysiotherapist(sara);
+        mainMenuControl.addPhysiotherapist(sarah);
 
 // Treatments
         Treatment massage = new Treatment("Massage", "Physiotherapy");
         Treatment acupuncture = new Treatment("Acupuncture", "Rehabilitation");
         Treatment neural = new Treatment("Neural Mobilisation", "Osteopathy");
-
+        Treatment mobilisation = new Treatment("Mobilisation of spine and joints", "Physiotherapy");
+        Treatment pool = new Treatment("Pool Rehabilitation", "Rehabilitation");
 // assign sessions per week
         LocalDate baseDate = LocalDate.of(2025, 5, 1);
-        int sessionDurationMinutes = 120;
-
+        int sessionDurationMinutes=120;
+        int hour;
+        LocalDateTime start;
+        LocalDate days;
+        LocalDateTime end;
         for (int week = 0; week < 4; week++) {
             for (int i = 0; i < 5; i++) {
-                int hour = 9 + (i % 2);
-                LocalDate day = baseDate.plusDays(week * 7 + i);
-                LocalDateTime start = LocalDateTime.of(day, LocalTime.of(hour, 0));
-                LocalDateTime end = start.plusMinutes(sessionDurationMinutes);
+                hour = 9 + (i % 2);
+                days = baseDate.plusDays(week * 7 + i);
+                start = LocalDateTime.of(days, LocalTime.of(hour, 0));
+                end = start.plusMinutes(sessionDurationMinutes);
 
                 helen.addTreatmentSlot(new TreatmentSlot(massage , start, end, helen));
+                sarah.addTreatmentSlot(new TreatmentSlot(neural, start, end, sarah));
+                john.addTreatmentSlot(new TreatmentSlot(pool, start, end, john));
+
+            }
+        }
+        int sessionMinutes=60;
+        for (int week = 0; week < 4; week++) {
+            for (int i = 0; i < 5; i++) {
+                 hour = 12 + (i % 2);
+                 days = baseDate.plusDays(week * 7 + i);
+                 start = LocalDateTime.of(days, LocalTime.of(hour, 0));
+                 end = start.plusMinutes(sessionMinutes);
                 john.addTreatmentSlot(new TreatmentSlot(acupuncture, start, end, john));
-                sara.addTreatmentSlot(new TreatmentSlot(neural, start, end, sara));
+                helen.addTreatmentSlot(new TreatmentSlot(mobilisation, start, end, helen));
             }
         }
 
@@ -150,10 +166,13 @@ public class BPC_MainMenu {
                         String expertise = null;
                         String physioName = null;
                         if (searchByExpertise) {
-                            System.out.print("Enter expertise: ");
+                            System.out.println("Available Expertises Area are: \n•. Physiotherapy\n•. Rehabilitation\n•. Osteopathy\n ");
+                            System.out.print("Enter your choice from available expertise areas: ");
                             expertise = scanner.nextLine();
+
                         } else if (searchChoice == 2) {
-                            System.out.print("Enter physiotherapist's name: ");
+                            System.out.println("Available Physiotherapists are: \n 1. Dr Helen (Expertise Area Physiotherapy)\n 2. Dr John (Expertise Area Rehabilitation)\n 3. Dr Sarah (Expertise Area Osteopathy)\n ");
+                            System.out.print("Enter your choice from available physiotherapist's name: ");
                             physioName = scanner.nextLine();
                         } else if (searchChoice == 0) {
                             break;

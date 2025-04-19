@@ -80,22 +80,22 @@ public class MainMenuControl {
 
         List<TreatmentSlot> availableSlots = new ArrayList<>();
 
-        if (request.isSearchByExpertiseorName()) {
+        if (request.isSearchByExpertise()) {
             for (Physiotherapist physio : physiotherapists) {
                 availableSlots.addAll(physio.getAvailableSlotsByExpertise(request.getExpertiseOrName()));
             }
-        } else {
+        } else  {
             Physiotherapist physio = findPhysiotherapistByName(request.getExpertiseOrName());
             if (physio != null) {
                 availableSlots.addAll(physio.getAllAvailableSlots());
             } else {
-                System.out.println("Physiotherapist not found.");
+                System.out.println("Physiotherapist not found. Enter Name from Available list");
                 return;
             }
         }
 
         if (availableSlots.isEmpty()) {
-            System.out.println("No available appointments found.");
+            System.out.println("Something wrong or No available appointments found.");
             return;
         }
 
