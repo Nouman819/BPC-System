@@ -3,8 +3,8 @@ package BPC;
 import java.time.*;
 import java.util.*;
 public class BPC_MainMenu {
-    static int nextPatientId = 1;
     MainMenuControl mainMenuControl = new MainMenuControl();
+    Scanner scanner = new Scanner(System.in);
     public void sampleData(){
 // Physiotherapists
         Physiotherapist helen = new Physiotherapist(1, "Helen", "123 Main St", 5551234);
@@ -58,60 +58,65 @@ public class BPC_MainMenu {
         mainMenuControl.addPatient(new Patient(113, "Yasir Iqbal", "Gulberg", 1915255));
         mainMenuControl.addPatient(new Patient(114, "Noor Fatima", "Bahadurabad", 3799943));
         mainMenuControl.addPatient(new Patient(115, "Danish Javed", "Landhi", 1006975351));
-
     }
-    public static void main(String[] args) {
-        BPC_MainMenu main = new BPC_MainMenu();
-        MainMenuControl mainMenuControl = main.mainMenuControl;
-        main.sampleData();
-        Scanner scanner = new Scanner(System.in);
+    public void MainMenu() {
+        while (true) {
+            System.out.println("\n**--- Boost Physio Clinic ---**");
+            System.out.println("1.   Add/Remove Patient");
+            System.out.println("2.   Book Treatment Appointment");
+            System.out.println("3.   Change or Cancel Appointment");
+            System.out.println("4.   Attend Appointment");
+            System.out.println("5.   Generate Report");
+            System.out.println("6.   Exit");
+            System.out.print("Enter your choice: ");
+            int Choice;
+            try {
+                Choice = Integer.parseInt(scanner.nextLine());
 
-       while (true) {
-           System.out.println("\n**--- Boost Physio Clinic ---**");
-           System.out.println("1.   Add/Remove Patient");
-           System.out.println("2.   Book Treatment Appointment");
-           System.out.println("3.   Change or Cancel Appointment");
-           System.out.println("4.   Attend Appointment");
-           System.out.println("5.   Generate Report");
-           System.out.println("6.   Exit");
-           System.out.print("Enter your choice: ");
-            int Choice=scanner.nextInt();
-            scanner.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 6.");
+                continue;
+            }
+
             switch (Choice) {
                 case 1:
-                    System.out.println("1. Add Patient");
-                    System.out.println("2. Remove Patient");
-                    System.out.println("0. Go Back to Main Menu");
-                    int subChoice = scanner.nextInt();
-                    scanner.nextLine();
-                    if (subChoice == 1) {
-                        while (mainMenuControl.isPatientIdExists(nextPatientId)) {
-                            nextPatientId++;
+                    while (true) {
+                        System.out.println("1. Add Patient");
+                        System.out.println("2. Remove Patient");
+                        System.out.println("0. Go Back to Main Menu");
+                        int subChoice;
+                        try {
+                            subChoice = Integer.parseInt(scanner.nextLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter 1, 2, or 0.");
+                            continue;
                         }
-                        int patientId = nextPatientId++;
-                        System.out.print("Enter patient name: ");
-                        String name = scanner.nextLine();
-                        System.out.print("Enter patient address: ");
-                        String address = scanner.nextLine();
-                        System.out.print("Enter patient phone: ");
-                        int phone = scanner.nextInt();
-                        mainMenuControl.addPatient(new Patient(patientId, name, address, phone));
-                        System.out.print("Patient added with ID: " + patientId + " Name: " + name + " Address: " + address + " Phone: " + phone + "\n");
-                        System.out.print("\nKindly Remember your ID for future");
-                        break;
-                    } else if (subChoice == 2) {
-                        System.out.print("Enter patient ID to remove: ");
-                        int patientId = scanner.nextInt();
-                        mainMenuControl.removePatient(patientId);
-                        scanner.nextLine();
-                        break;
+                        int patientId;
+                        if (subChoice == 1) {
+                            patientId = mainMenuControl.getAvailablePatientId();
+                            System.out.print("Enter patient name: ");
+                            String name = scanner.nextLine();
+                            System.out.print("Enter patient address: ");
+                            String address = scanner.nextLine();
+                            System.out.print("Enter patient phone: ");
+                            int phone = scanner.nextInt();
+                            scanner.nextLine();
+                            mainMenuControl.addPatient(new Patient(patientId, name, address, phone));
+                            System.out.print("Patient added with ID: " + patientId + " Name: " + name + " Address: " + address + " Phone: " + phone + "\n");
+                            System.out.print("\nKindly Remember your ID for future\n");
+                        } else if (subChoice == 2) {
+                            System.out.print("Enter patient ID to remove: ");
+                            patientId = scanner.nextInt();
+                            scanner.nextLine();
+                            mainMenuControl.removePatient(patientId);
+                        } else if (subChoice == 0) {
+                            break;
+                        } else {
+                            System.out.println("\nInvalid Choice Entered\n");
+                        }
                     }
-                    else if (subChoice == 0) {
-                        break;
-                    }
-                    else {
-                        System.out.println("\nInvalid Choice Entered\n");
-                    }
+                    break;
+
                 case 2:
                     System.out.print("Enter patient ID: ");
                     int patientId = scanner.nextInt();
@@ -126,50 +131,74 @@ public class BPC_MainMenu {
                         break;
                     }
                     scanner.nextLine();
-                    System.out.println("For Appointment Booking do you want to ...");
-                    System.out.print("1. Search by Expertise   ");
-                    System.out.println("\n2. Search by Physiotherapist Name   ");
-                    System.out.println("0. Go Back to Main Menu");
-                    System.out.print("Enter your choice: ");
-                    int searchChoice = scanner.nextInt();
-                    scanner.nextLine();
-                    boolean searchByExpertise = (searchChoice == 1);
-                    String expertise = null;
-                    String physioName = null;
-                    if (searchByExpertise) {
-                        System.out.print("Enter expertise: ");
-                        expertise = scanner.nextLine();
-                    }
-                    else if (searchChoice == 2) {
-                        System.out.print("Enter physiotherapist's name: ");
-                        physioName = scanner.nextLine();
-                    }
-                    else if (searchChoice == 0) {
-                        break;
-                    }
-                    else {
-                        System.out.println("\nInvalid Choice Entered\n");
-                    }
-                    String searchTerm = searchByExpertise ? expertise : physioName;
+                    while(true) {
+                        System.out.println("For Appointment Booking do you want to ...");
+                        System.out.print("1. Search by Expertise   ");
+                        System.out.println("\n2. Search by Physiotherapist Name   ");
+                        System.out.println("0. Go Back to Main Menu");
+                        System.out.print("Enter your choice: ");
+                        int searchChoice;
+                        try {
+                            searchChoice = Integer.parseInt(scanner.nextLine());
 
-                    AppointmentRequest request = new AppointmentRequest(patientId, searchTerm, searchByExpertise);
-                    mainMenuControl.bookAppointment(request);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a number 1,2 and 0.");
+                            continue;
+                        }
+
+                        boolean searchByExpertise = (searchChoice == 1);
+                        String expertise = null;
+                        String physioName = null;
+                        if (searchByExpertise) {
+                            System.out.print("Enter expertise: ");
+                            expertise = scanner.nextLine();
+                        } else if (searchChoice == 2) {
+                            System.out.print("Enter physiotherapist's name: ");
+                            physioName = scanner.nextLine();
+                        } else if (searchChoice == 0) {
+                            break;
+                        } else {
+                            System.out.println("\nInvalid Choice Entered\n");
+                        }
+                        String searchTerm = searchByExpertise ? expertise : physioName;
+
+                        AppointmentRequest request = new AppointmentRequest(patientId, searchTerm, searchByExpertise);
+                        mainMenuControl.bookAppointment(request);
+                    }
                     break;
                 case 3:
                     System.out.print("Enter appointment ID to cancel or change: ");
                     int appointmentId = scanner.nextInt();
                     scanner.nextLine();
+                    while (true) {
+                        System.out.println("1. Cancel Appointment");
+                        System.out.println("2. Change Appointment");
+                        System.out.println("0. Go Back");
+                        System.out.print("Enter choice: ");
 
-                    System.out.print("1. Cancel Appointment\n2. Change Appointment\nEnter choice: ");
-                    int actionChoice = scanner.nextInt();
-                    scanner.nextLine();
+                        int actionChoice;
+                        try {
+                            actionChoice = Integer.parseInt(scanner.nextLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter 1, 2, or 0.");
+                            continue;
+                        }
 
-                    if (actionChoice == 1) {
-                        mainMenuControl.cancelAppointment(appointmentId);
-                    } else if (actionChoice == 2) {
-                        mainMenuControl.rescheduleAppointment(appointmentId);
+                        if (actionChoice == 1) {
+                            mainMenuControl.cancelAppointment(appointmentId);
+                            break; // exit to main menu
+                        } else if (actionChoice == 2) {
+                            mainMenuControl.rescheduleAppointment(appointmentId);
+                            break; // exit to main menu
+                        } else if (actionChoice == 0) {
+                            break; // go back to main menu
+                        } else {
+                            System.out.println("\nInvalid choice entered. Please enter 1, 2, or 0.\n");
+                        }
                     }
                     break;
+
+
                 case 4:
                     System.out.print("Enter appointment ID to attend: ");
                     int attendId = scanner.nextInt();
@@ -187,5 +216,13 @@ public class BPC_MainMenu {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+
+    }
+    public static void main(String[] args) {
+        BPC_MainMenu main = new BPC_MainMenu();
+        main.sampleData();
+        main.MainMenu();
+
+
     }
 }

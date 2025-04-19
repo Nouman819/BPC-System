@@ -1,8 +1,6 @@
 package BPC;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainMenuControl {
 
@@ -20,13 +18,16 @@ public class MainMenuControl {
         return physiotherapists;
     }
 
-    public boolean isPatientIdExists(int id) {
+    public int getAvailablePatientId() {
+        Set<Integer> usedIds = new HashSet<>();
         for (Patient patient : patients) {
-            if (patient.getId() == id) {
-                return true;
-            }
+            usedIds.add(patient.getId());
         }
-        return false;
+        int id = 1;
+        while (usedIds.contains(id)) {
+            id++;
+        }
+        return id;
     }
 
     public void addPatient(Patient patient) {
@@ -34,17 +35,18 @@ public class MainMenuControl {
     }
 
     public void removePatient(int id) {
-        for (Patient patient : patients) {
+        Iterator<Patient> iterator = patients.iterator();
+        while (iterator.hasNext()) {
+            Patient patient = iterator.next();
             if (patient.getId() == id) {
-                patients.remove(patient);
-                System.out.print("Patient removed from the clinic");
+                iterator.remove();
+                System.out.println("Patient with ID " + id + " removed successfully.");
+                return;
             }
-            else {
-                System.out.print("Patient not found");
-            }
-            return;
         }
+        System.out.println("Patient not found with ID " + id);
     }
+
     public Patient findPatientById(int id) {
         for (Patient patient : patients) {
             if (patient.getId() == id) {
