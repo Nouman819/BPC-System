@@ -23,6 +23,7 @@ public class TreatmentSlot {
     }
     public void cancelSlot() {
         this.isBooked = false;
+
     }
     public Treatment getTreatment() {
         return treatment;

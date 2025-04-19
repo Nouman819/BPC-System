@@ -170,10 +170,12 @@ public class BPC_MainMenu {
                             System.out.print("Enter your choice from available expertise areas: ");
                             expertise = scanner.nextLine();
 
+
                         } else if (searchChoice == 2) {
                             System.out.println("Available Physiotherapists are: \n 1. Dr Helen (Expertise Area Physiotherapy)\n 2. Dr John (Expertise Area Rehabilitation)\n 3. Dr Sarah (Expertise Area Osteopathy)\n ");
                             System.out.print("Enter your choice from available physiotherapist's name: ");
                             physioName = scanner.nextLine();
+
                         } else if (searchChoice == 0) {
                             break;
                         } else {
@@ -183,6 +185,7 @@ public class BPC_MainMenu {
 
                         AppointmentRequest request = new AppointmentRequest(patientId, searchTerm, searchByExpertise);
                         mainMenuControl.bookAppointment(request);
+                        break;
                     }
                     break;
                 case 3:
@@ -216,13 +219,13 @@ public class BPC_MainMenu {
                         }
                     }
                     break;
-
-
                 case 4:
                     System.out.print("Enter appointment ID to attend: ");
                     int attendId = scanner.nextInt();
                     mainMenuControl.attendAppointment(attendId);
+                    scanner.nextLine();
                     break;
+
 
                 case 5:
                     mainMenuControl.generateReport();

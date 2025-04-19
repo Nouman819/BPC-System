@@ -136,13 +136,27 @@ public class MainMenuControl {
                 return appointment;
             }
         }
-        return null; // return null if not found
+        return null;
     }
     public void attendAppointment(int appointmentId) {
         for (AppointmentSchedule appointment : appointments) {
             if (appointment.getId() == appointmentId) {
+                if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+                    System.out.println("Cannot attend. This appointment has been cancelled.");
+                    return;
+                } else if (appointment.getStatus() == AppointmentStatus.ATTENDED) {
+                    System.out.println("This appointment has already been attended.");
+                    return;
+                }
+
+
+                TreatmentSlot slot = appointment.getTreatmentSlot();
+                if (slot != null) {
+                    slot.cancelSlot();
+                }
+
                 appointment.markAsAttended();
-                System.out.println("Appointment marked as attended.");
+                System.out.println("Appointment marked as attended and slot freed.");
                 return;
             }
         }
@@ -153,6 +167,9 @@ public class MainMenuControl {
             if (appointment.getId() == appointmentId) {
                 if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
                     System.out.println("This appointment has already been cancelled.");
+                    return;
+                } else if (appointment.getStatus() == AppointmentStatus.ATTENDED) {
+                    System.out.println("Cannot cancel. This appointment has already been attended.");
                     return;
                 }
 
@@ -175,78 +192,82 @@ public class MainMenuControl {
 
         if (appointment == null) {
             System.out.println("Appointment not found.");
-            return;
-        }
+        } else if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+            System.out.println("Cannot reschedule. This appointment has been cancelled.");
+        } else if (appointment.getStatus() == AppointmentStatus.ATTENDED) {
+            System.out.println("Cannot reschedule. This appointment has already been attended.");
+        }else {
 
-        System.out.println("Choose how you want to search new slots:");
-        System.out.println("1. By Expertise");
-        System.out.println("2. By Physiotherapist Name");
-        int searChoice = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Choose how you want to search new slots:");
+            System.out.println("1. By Expertise");
+            System.out.println("2. By Physiotherapist Name");
+            int searChoice = scanner.nextInt();
+            scanner.nextLine();
 
-        List<TreatmentSlot> availableSlots = new ArrayList<>();
+            List<TreatmentSlot> availableSlots = new ArrayList<>();
 
-        if (searChoice == 1) {
-            System.out.print("Enter expertise: ");
-            String expertise = scanner.nextLine();
+            if (searChoice == 1) {
+                System.out.println("Available Expertises Area are: \n•. Physiotherapy\n•. Rehabilitation\n•. Osteopathy\n ");
+                System.out.print("Enter your choice from available expertise areas: ");
+                String expertise = scanner.nextLine();
 
-            for (Physiotherapist physio : getPhysiotherapists()) {
-                for (TreatmentSlot slot : physio.getTimetable()) {
-                    if (!slot.isBooked() &&
-                            slot.getTreatment().getExpertise().equalsIgnoreCase(expertise) &&
-                            slot != appointment.getTreatmentSlot()) {
-                        availableSlots.add(slot);
+                for (Physiotherapist physio : getPhysiotherapists()) {
+                    for (TreatmentSlot slot : physio.getTimetable()) {
+                        if (!slot.isBooked() &&
+                                slot.getTreatment().getExpertise().equalsIgnoreCase(expertise) &&
+                                slot != appointment.getTreatmentSlot()) {
+                            availableSlots.add(slot);
+                        }
                     }
+                }
+
+            } else if (searChoice == 2) {
+                System.out.println("Available Physiotherapists are: \n 1. Dr Helen (Expertise Area Physiotherapy)\n 2. Dr John (Expertise Area Rehabilitation)\n 3. Dr Sarah (Expertise Area Osteopathy)\n ");
+                System.out.print("Enter your choice from available physiotherapist's name: ");
+                String physioName = scanner.nextLine();
+
+                Physiotherapist physio = findPhysiotherapistByName(physioName);
+                if (physio != null) {
+                    for (TreatmentSlot slot : physio.getTimetable()) {
+                        if (!slot.isBooked() && slot != appointment.getTreatmentSlot()) {
+                            availableSlots.add(slot);
+                        }
+                    }
+                } else {
+                    System.out.println("Physiotherapist not found.");
+
                 }
             }
 
-        } else if (searChoice == 2) {
-            System.out.print("Enter physiotherapist's name: ");
-           String physioName = scanner.nextLine();
-
-            Physiotherapist physio = findPhysiotherapistByName(physioName);
-            if (physio != null) {
-                for (TreatmentSlot slot : physio.getTimetable()) {
-                    if (!slot.isBooked() && slot != appointment.getTreatmentSlot()) {
-                        availableSlots.add(slot);
-                    }
-                }
-            } else {
-                System.out.println("Physiotherapist not found.");
+            if (availableSlots.isEmpty()) {
+                System.out.println("No available slots found for rescheduling.");
 
             }
+
+            System.out.println("Available Slots for Rescheduling:");
+            for (int i = 0; i < availableSlots.size(); i++) {
+                System.out.println((i + 1) + ". " + availableSlots.get(i));
+            }
+
+            System.out.print("Select a new slot number: ");
+            int selectedIndex = scanner.nextInt();
+            scanner.nextLine();
+
+            if (selectedIndex < 1 || selectedIndex > availableSlots.size()) {
+                System.out.println("Invalid selection.");
+            }
+
+
+            TreatmentSlot oldSlot = appointment.getTreatmentSlot();
+            TreatmentSlot newSlot = availableSlots.get(selectedIndex - 1);
+
+            oldSlot.cancelSlot();
+            newSlot.bookSlot();
+
+            appointment.reschedule(newSlot);
+            System.out.println("Appointment rescheduled successfully.");
+            System.out.println("Updated Appointment Details: " + appointment);
         }
-
-        if (availableSlots.isEmpty()) {
-            System.out.println("No available slots found for rescheduling.");
-
-        }
-
-        System.out.println("Available Slots for Rescheduling:");
-        for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + availableSlots.get(i));
-        }
-
-        System.out.print("Select a new slot number: ");
-        int selectedIndex = scanner.nextInt();
-        scanner.nextLine();
-
-        if (selectedIndex < 1 || selectedIndex > availableSlots.size()) {
-            System.out.println("Invalid selection.");
-        }
-
-
-
-        TreatmentSlot oldSlot = appointment.getTreatmentSlot();
-        TreatmentSlot newSlot = availableSlots.get(selectedIndex - 1);
-
-        oldSlot.cancelSlot();
-        newSlot.bookSlot();
-
-        appointment.reschedule(newSlot);
-        System.out.println("Appointment rescheduled successfully.");
-        System.out.println("Updated Appointment Details: " + appointment);
-
     }
     public void generateReport() {
         System.out.println("\n**--- Treatment Appointments Report ---**");
