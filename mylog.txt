@@ -1,3 +1,34 @@
+commit 9f55762cbf9f30364109a814faf350dde17855a9
+Merge: 1bb90db cb0f8d8
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 20 23:37:50 2025 +0100
+
+    Merge remote-tracking branch 'origin/main'
+
+commit 1bb90dbb14faa61a965374aaf689e366f974520f
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 20 23:34:06 2025 +0100
+
+    Add JUnit Test of core fuctionalities
+
+commit cb0f8d87ec87ab429d55cbd7fcea3df42d30382a
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 20 23:34:06 2025 +0100
+
+    Add JUnit Test of core fuctionalities
+
+commit 0ad9fea3135b01705b6cc1056737c8fa10d3a521
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 20 21:16:59 2025 +0100
+
+    Change Person class to abstract
+
+commit e851157394bc7c7f73c17a4f40be0cd1b6c5cc9c
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 22:14:24 2025 +0100
+
+    Git log Created
+
 commit a8ac515aab53ad07c529fadd9f7dc73377633c57
 Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
 Date:   Sat Apr 19 22:06:29 2025 +0100
