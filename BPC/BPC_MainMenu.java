@@ -208,12 +208,12 @@ public class BPC_MainMenu {
 
                         if (actionChoice == 1) {
                             mainMenuControl.cancelAppointment(appointmentId);
-                            break; // exit to main menu
+                            break;
                         } else if (actionChoice == 2) {
                             mainMenuControl.rescheduleAppointment(appointmentId);
-                            break; // exit to main menu
+                            break;
                         } else if (actionChoice == 0) {
-                            break; // go back to main menu
+                            break;
                         } else {
                             System.out.println("\nInvalid choice entered. Please enter 1, 2, or 0.\n");
                         }

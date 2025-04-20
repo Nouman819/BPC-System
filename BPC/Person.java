@@ -1,6 +1,6 @@
 package BPC;
 
-public class Person {
+public abstract class Person {
     public int id;
     public String fullName;
     public String address;
