@@ -17,6 +17,10 @@ public class MainMenuControl {
     public List<Physiotherapist> getPhysiotherapists() {
         return physiotherapists;
     }
+    public List<AppointmentSchedule> getAppointments() {
+        return appointments;
+    }
+
 
     public int getAvailablePatientId() {
         Set<Integer> usedIds = new HashSet<>();

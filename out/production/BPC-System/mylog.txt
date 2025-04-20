@@ -1,0 +1,119 @@
+commit a8ac515aab53ad07c529fadd9f7dc73377633c57
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 22:06:29 2025 +0100
+
+    Fix issues in cancel, attend and reschedule appointment functions.
+
+commit ef454f56059162345781978aadc1a675bf422d9d
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 21:18:41 2025 +0100
+
+    Improve Understandability, do some minor refactoring and add some further Treatment and Treatment slots.
+
+commit db1f51bb1d321fb2937fb597e45df080d6c9e9e8
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 19:41:41 2025 +0100
+
+    Fix Issues related to Add/Remove Patient Function, Add MainMenu Function in BPC_MainMenu Class and Add try/Catch in MainMenu function for better User Experience.
+
+commit b34fe3c8a6a1c5f23a3d62780f6901e195a04225
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 18:13:07 2025 +0100
+
+    Final Functionality Added: Cancel and Rescheduling Appointment
+
+commit 85cde749cbd0632a73bbee965f4eb331989d28f7
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 02:35:51 2025 +0100
+
+    Refactor BPC_Main to BPC_MainMenu, Add new Class MainMenuControl where all function are added which handle the Main Menu
+
+commit f14e588e598ae5a527b4a70b8dda341654d22943
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sat Apr 19 02:35:31 2025 +0100
+
+    Refactor BPC_Main to BPC_MainMenu, Add new Class MainMenuControl where all function are added which handle the Main Menu
+
+commit ccb1f9b7208c2ff3ea61e3985db5a125b288ee22
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Thu Apr 17 00:12:33 2025 +0100
+
+    Modification in bookAppointment function and relevant fields.
+
+commit bc8746a9b949e5e6848eac2d6b5e187a2dd96341
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 16 22:15:39 2025 +0100
+
+    Fourth Functionality added: Generate Report
+
+commit 5f95276a666f6171eed1c601ccd0eb792575c8c8
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 16 21:56:07 2025 +0100
+
+    Third Functionality added: Mark Appointment Attended
+
+commit 99ce05626a302b9fcc26a26ceb9f62c3bdc9caf1
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Tue Apr 15 15:32:39 2025 +0100
+
+    Second Functionality added: Book Treatment Appointment, also add sample data including(patients, treatments, physios etc), remove all warning
+
+commit 46114a4031222ccfd4d71e8b18e021f19ae5950f
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Mon Apr 14 14:01:59 2025 +0100
+
+    Add AppointmentSchedule Class ( for appointment scheduling)
+
+commit 3d18c0c9e51bd326496414171bf486bd57b914d8
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Mon Apr 14 13:42:05 2025 +0100
+
+    Add Enum to check AppointmentStatus
+
+commit 076a61e914419dbe33c69993c30095ffa9216bdc
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Mon Apr 14 13:39:58 2025 +0100
+
+    Add AppointmentRequest Class
+
+commit 38880dea2d139abc222dbf81f44bb185aa59be42
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Mon Apr 14 13:24:31 2025 +0100
+
+    Add TreatmentSlot Class
+
+commit 1c40735e671928a9a017e602c74b037f75b0407c
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Mon Apr 14 13:03:00 2025 +0100
+
+    Add Treatment Class with test
+
+commit 722447729e7a9dd368dd4c0d52faba77432ed820
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 13 22:12:37 2025 +0100
+
+    First Functionality Added: Add/Remove Patient
+
+commit b7478c9ff3dec75a619d065e04932e2e8325ebfc
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 13 21:17:36 2025 +0100
+
+    Add Physiotherapist Class extend Person Class
+
+commit d97e252261954339a282a4ae00ae09b8c3f29b78
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 13 20:00:30 2025 +0100
+
+    Add Patient Class extend Person Class
+
+commit 8317c138152c92b544938242b0ba1876d4d2f50d
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 13 19:58:59 2025 +0100
+
+    Add Patient Class extend Person Class
+
+commit 87a32d710803272c164ff1fed14e6b071d53ad2c
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 13 19:33:21 2025 +0100
+
+    Add Person Class

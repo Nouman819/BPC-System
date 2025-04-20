@@ -31,6 +31,10 @@ public class AppointmentSchedule {
         return treatmentSlot;
     }
 
+    public void setStatus(AppointmentStatus status) {
+        this.status = status;
+    }
+
     public Physiotherapist getPhysiotherapist() {
         return physiotherapist;
     }
