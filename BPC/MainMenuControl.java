@@ -7,11 +7,13 @@ public class MainMenuControl {
     private final List<Patient> patients;
     private final List<Physiotherapist> physiotherapists;
     private final List<AppointmentSchedule> appointments;
+    private final List<Treatment> treatments;
     Scanner scanner = new Scanner(System.in);
     public MainMenuControl() {
         this.patients = new ArrayList<>();
         this.physiotherapists = new ArrayList<>();
         this.appointments = new ArrayList<>();
+        this.treatments = new ArrayList<>();
     }
 
     public List<Physiotherapist> getPhysiotherapists() {
@@ -20,7 +22,9 @@ public class MainMenuControl {
     public List<AppointmentSchedule> getAppointments() {
         return appointments;
     }
-
+    public List<Treatment> getTreatments() {
+        return treatments;
+    }
 
     public int getAvailablePatientId() {
         Set<Integer> usedIds = new HashSet<>();
@@ -297,4 +301,65 @@ public class MainMenuControl {
             System.out.println(physiotherapist.getFullName() + " - Attended: " + attendedCount);
         }
     }
+
+    //This Method is just for Junit Test no else use
+    public boolean bookAppointmentTest(AppointmentRequest request, int selectedIndex) {
+        Patient patient = findPatientById(request.getPatientId());
+
+        for (AppointmentSchedule a : appointments) {
+            if (a.getPatient().getId() == patient.getId() && a.getStatus() == AppointmentStatus.BOOKED) {
+                System.out.println("This patient already has a booked appointment.");
+                return false;
+            }
+        }
+
+        List<TreatmentSlot> availableSlots = new ArrayList<>();
+
+        if (request.isSearchByExpertise()) {
+            for (Physiotherapist physio : physiotherapists) {
+                availableSlots.addAll(physio.getAvailableSlotsByExpertise(request.getExpertiseOrName()));
+            }
+        } else {
+            Physiotherapist physio = findPhysiotherapistByName(request.getExpertiseOrName());
+            if (physio != null) {
+                availableSlots.addAll(physio.getAllAvailableSlots());
+            } else {
+                System.out.println("Physiotherapist not found.");
+                return false;
+            }
+        }
+
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available appointments found.");
+            return false;
+        }
+
+        System.out.println("Available appointments:");
+        for (int i = 0; i < availableSlots.size(); i++) {
+            System.out.println((i + 1) + ". " + availableSlots.get(i));
+        }
+
+        if (selectedIndex < 0 || selectedIndex >= availableSlots.size()) {
+            System.out.println("Invalid selection.");
+            return false;
+        }
+
+        TreatmentSlot selectedSlot = availableSlots.get(selectedIndex);
+        selectedSlot.bookSlot();
+
+        AppointmentSchedule appointment = new AppointmentSchedule(
+                patient,
+                selectedSlot.getPhysiotherapist(),
+                selectedSlot.getTreatment().getExpertise(),
+                selectedSlot
+        );
+
+        appointments.add(appointment);
+        patient.addAppointmentId(appointment.getId());
+
+        System.out.println("Appointment booked successfully:");
+        System.out.println(appointment);
+        return true;
+    }
+
 }

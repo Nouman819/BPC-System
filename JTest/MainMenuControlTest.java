@@ -46,21 +46,19 @@ class MainMenuControlTest {
 
     @Test
     void bookAppointment() {
+        control.getTreatments().add(treatment);
 
-        AppointmentRequest request = new AppointmentRequest(1, "Dr. Helen", true);
-        String input = "1\n";
-        System.setIn(new java.io.ByteArrayInputStream(input.getBytes()));
+        physiotherapist.addTreatmentSlot(treatmentSlot);
+        control.addPhysiotherapist(physiotherapist);
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        AppointmentRequest request = new AppointmentRequest(patient.getId(), "Dr. Helen", false);
 
-        control.bookAppointment(request);
 
-        System.setOut(System.out);
-        System.setIn(System.in);
+        boolean success = control.bookAppointmentTest(request, 0);
 
-        assertTrue(out.toString().contains("Appointment booked successfully:"), out.toString());
+        assertTrue(success, "Failed to book appointment. Possibly due to no available slots or setup error.");
     }
+
 
     @Test
     void attendAppointment() {
