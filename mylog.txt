@@ -1,3 +1,15 @@
+commit 8a11a1ba9bb19b9fb328c77888bca0b74ada08d4
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 23 19:01:03 2025 +0100
+
+    Add boolean bookappointmentTest method for bookappointment Test.
+
+commit 5b2971c837479473686388c36ba7aec8c6071892
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Sun Apr 20 23:43:05 2025 +0100
+
+    Updated Git log
+
 commit 9f55762cbf9f30364109a814faf350dde17855a9
 Merge: 1bb90db cb0f8d8
 Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
