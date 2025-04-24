@@ -1,3 +1,34 @@
+commit bcd9325b599586dfce702d13d2ac5a9765cb4366
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Thu Apr 24 15:21:08 2025 +0100
+
+    Executable Jar File Updated BPC_System_jar2.xml
+
+commit f517c9f5e418114b3113dbf59532b5fe970038d1
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Thu Apr 24 15:18:24 2025 +0100
+
+    Executable Jar File BPC_System_jar2.xml
+
+commit 258e6bd4b2d2c9f7618e23b092cdcbf08a44d06d
+Merge: c76d285 4e33d1b
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 23 19:06:35 2025 +0100
+
+    Merge remote-tracking branch 'origin/main'
+
+commit c76d285a1a0d32e9445d2a9506c58ebed1428c69
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 23 19:03:54 2025 +0100
+
+    Added Class Diagram and Updated Gitlog
+
+commit 4e33d1b16bc7e65c315fc5c2bb2a612fbb0c7820
+Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
+Date:   Wed Apr 23 19:03:54 2025 +0100
+
+    Added Class Diagram and Updated Gitlog
+
 commit 8a11a1ba9bb19b9fb328c77888bca0b74ada08d4
 Author: Muhammad Nouman Shafiq <ms24aga@herts.ac.uk>
 Date:   Wed Apr 23 19:01:03 2025 +0100
